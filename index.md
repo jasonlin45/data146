@@ -1,4 +1,4 @@
-## [Data 146](https://jasonlin45.github.io/data146/)
+## Data 146
 
 ### Exercise 1
 
