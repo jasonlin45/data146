@@ -49,6 +49,8 @@ Median = 0.9999
 #### Graph 2: Life Expectancies in 1952 & 2007 with Logarithmic Transformation
 ![Life Expectancy in 1952 & 2007](proj2images/loglifeexectancy.png)
 
+#### Which is better?
+Graph 1 is better.  Life expectancy is not a number that's very interpretable with a logarithmic transformation.  The buckets are much more interpretable in the untransformed graph, and the data is reasonably spread out across the buckets to give us a good visual comparison.
 ### Populations
 #### Graph 1: Population for all Countries by Year
 ![Population Box Plots](proj2images/boxplots1.png)
@@ -56,3 +58,5 @@ Median = 0.9999
 #### Graph 2: Population for all Countries by Year with Logarithmic Transformation
 ![Population Box Plots](proj2images/boxplots2.png)
 
+#### Which is better?
+Graph 2 is better.  Population numbers appear much clearer once a logarithmic transformation is applied.  This transformation helps normalize the dataset, as population is a highly skewed variable in this dataset.  The result is clear - the boxplots are actually visible and look great in the second graph, but are squashed flat in Graph 1.
