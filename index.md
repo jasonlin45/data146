@@ -7,6 +7,8 @@
 
 ### [Project 2](project2.html)
 
+### [Project 3](project3.html)
+
 ## Exercises
 
 ### [Exercise 1](exercise1.html)
