@@ -221,24 +221,24 @@ Let's go ahead and use the actual price, with the zip code data added.
 ```python
 act = pd.read_csv("charleston_act.csv")
 
-X = act
-Y = act
+X = act.drop(columns='prices')
+Y = act['prices']
 ```
 
 ### Unstandardized Linear Regression
 Running our first linear regression model from above yields the following results:
 ```
-Training: 1.000
-Testing: 0.821
+Training: 0.344
+Testing: 0.252
 ```
-These results are much much better.  We have a perfect fit on the training data, which isn't necessarily always desirable, but definitely a step up from not being fit at all.  Our test fit is also much better, with a value of 0.821.  Our model's predictive power is quite strong now that we have zip codes incorporated.  However, with a training fit of 1.0 and a lower test fit, we may be seeing some overfitting here.
+These results are much much better.  We have a better fit overall, not a fantastic one, but definitely a step up from not being fit at all.  Our model's predictive power is still mediocre even though we have zip codes incorporated.  Since the training score is quite a bit higher than the testing score, we may be seeing some overfitting happening here.
 
 ### Standardized Linear Regression
 Running our linear regression model with standardized features from above yields the following results:
 
 ```
-Training: 1.000
-Testing: 0.814
+Training: 0.343
+Testing: 0.265
 ```
 
 Standardizing doesn't really seem to make much of a difference, but the accuracies are up significantly from before.  Again, the zip codes are helping greatly here.
@@ -246,38 +246,14 @@ Standardizing doesn't really seem to make much of a difference, but the accuraci
 ### Ridge Regression
 Running our ridge regression model same as above, with 5 folds and standardized features, we get the following:
 ```
-Training: 0.992
-Testing: 0.870
+Training: 0.340
+Testing: 0.291
 ```
 
-This result is again quite good, and shows that the zip codes are strong in helping us determine actual house pricing.  We can speculate that the reason why zip codes are so important in this calculation may be that similarly priced houses tend to be grouped together in the same areas.  Because zip codes are an indicator of geographic location, similar zip codes may imply similar prices.
-
-## Quick Additional Optimizations
-
-Another thing that I explored was the use of a train test split rather than kfolds.  While optimizing the k values, I found that a lower value tended to produce better results.  As a result, I found that a train test split with 60% testing produced the best model.  With this data, the best alpha value for ridge regression found was `0`, producing similar results to the linear regressions.
-
-The code below shows a basic model trained with a train test split, yielding a higher R<sup>2</sup> value.
-
-```python
-from sklearn.model_selection import train_test_split as tts
-
-Xtrain,Xtest,ytrain,ytest = tts(X,Y,test_size=0.6)
-
-
-lin_reg.fit(Xtrain, ytrain)
-lin_reg.fit(Xtrain, ytrain)
-
-print('Training: ' + format(lin_reg.score(Xtrain, ytrain), '.3f'))
-print('Testing: ' + format(lin_reg.score(Xtest, ytest), '.3f'))
-```
-Output:
-```
-Training: 1.000
-Testing: 0.928
-```
+This result is again much better, and shows that the zip codes are strong in helping us determine actual house pricing.  We can speculate that the reason why zip codes are so important in this calculation may be that similarly priced houses tend to be grouped together in the same areas.  Because zip codes are an indicator of geographic location, similar zip codes may imply similar prices.
 
 ## Conclusion
 
-Choosing the above linear regression trained on a train test split, our highest R<sup>2</sup> value was 0.928, which is quite decent.  This model is overfit, since our training result is 1.0, and higher than our testing R<sup>2</sup>.  It seems that location correlates strongly with the result of our data, and the number of beds/baths/sqft isn't as strong of an indicator.  In order to increase predictive power, it may be necessary to look for additional features.  One such feature may be to look at the type of building for sale, since we can also use condo vs house vs townhouse vs new construction as features.  Intuitively, these may lead to strong price variations.  
+Choosing the above ridge regression trained using k-folds for cross validation, our highest R<sup>2</sup> value was 0.291, which isn't fantastic.  This model is only slightly overfit, since our training result is 0.340, and higher than our testing R<sup>2</sup>.  However, it is quite normal to get a higher value for training.  It seems that location correlates strongly with the result of our data, and the number of beds/baths/sqft isn't as strong of an indicator.  In order to increase predictive power, it may be necessary to look for additional features.  One such feature may be to look at the type of building for sale, since we can also use condo vs house vs townhouse vs new construction as features.  Intuitively, these may lead to strong price variations.  
 
-Another improvement we could make outside of just Zillow housing data would be joining this data with other geocoded data on local crime, poverty, or school statistics.  Population of areas may also be a good indicator of demand, meaning prices may also be higher for housing.  
+Another improvement we could make outside of just Zillow housing data would be joining this data with other geocoded data on local crime, poverty, or school statistics.  Population of areas may also be a good indicator of demand, meaning prices may also be higher for housing.  Even further, taking a look at the overall income level of the area the house is located in might help determine the prices in that area.
