@@ -12,3 +12,7 @@
 ## Exercises
 
 ### [Exercise 1](exercise1.html)
+
+## Extra Credit
+
+### [Slice of Data Science - Claire](sliceofdatascience-claire.html)
