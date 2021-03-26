@@ -16,3 +16,7 @@
 ## Extra Credit
 
 ### [Slice of Data Science - Claire](sliceofdatascience-claire.html)
+
+## Midterm
+
+### [Midterm](midterm.html)
